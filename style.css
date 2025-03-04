@@ -1,0 +1,175 @@
+
+        @import url("https://unicons.iconscout.com/release/v4.0.0/css/line.css");
+        @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Nunito", sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        main {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            background: linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%);
+            overflow: hidden;
+        }
+
+        .topper {
+            width: 100%;
+            background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+        .topper .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #11ba91 url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAlXAmdUfKKH-7QZ2yihil_GReFnwJmtB-w&usqp=CAU);
+            background-size: cover;
+            margin-left: 15px;
+        }
+
+        .topper .name {
+            color: #fff;
+            font-weight: bolder;
+            margin-left: 15px;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .bottom {
+            width: 100%;
+            background: #595656;
+            position: fixed;
+            bottom: 0;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #input {
+            width: 95%;
+            background: grey;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+        #input input {
+            width: 90%;
+            padding: 7px;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        #input input::placeholder {
+            color: #e6e6e6;
+        }
+
+        #input button {
+            font-size: 20px;
+            border-radius: 10px;
+            color: #fff;
+            outline: none;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .msgs_cont {
+            width: 100%;
+            height: calc(100vh - 155px);
+            overflow: auto;
+          
+               padding: 12px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+            
+            scroll-behavior: smooth;
+        }
+
+        .msgs_cont ul {
+            width: 100%;
+            padding: 15px;
+            list-style-type: none;
+        }
+
+        .msgs_cont li {
+            padding: 10px;
+            max-width: 70%;
+            margin: 10px 0;
+            background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+            color: #fff;
+            border-radius: 10px;
+            word-wrap: break-word;
+        }
+
+
+    .schat {
+        float: right;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        margin: 10px 0;
+        padding: 12px 16px;
+        border-radius: 15px 15px 0 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        max-width: 70%;
+        clear: both;
+    }
+
+    .rchat {
+        float: left;
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: #fff;
+        margin: 10px 0;
+        padding: 12px 16px;
+        border-radius: 15px 15px 15px 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        max-width: 70%;
+        clear: both;
+    }
+
+    /* Animation pour les nouveaux messages */
+    .schat, .rchat {
+        animation: messageAppear 0.3s ease-out;
+        transform-origin: bottom;
+    }
+
+    @keyframes messageAppear {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Effet au survol pour les messages */
+    .schat:hover, .rchat:hover {
+        transform: scale(1.02);
+        transition: transform 0.2s ease;
+    }
+
+          
