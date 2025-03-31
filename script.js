@@ -1,66 +1,73 @@
-      // Script unifié et corrigé
-        document.getElementById("sendBtn").addEventListener("click", sendMessage);
-        
-        const predefinedResponses = {
-            "qui es-tu ?": "Je suis l'intelligence artificielle créée par Messie Osango.",
-            "créateur": "Mon créateur est Messie Osango.",
-            "qui t'a créé": "J'ai été développée par Messie Osango, un passionné d'intelligence artificielle.",
-            "que fais-tu": "Je suis ici pour répondre à vos questions et vous aider dans vos tâches quotidiennes !" ,
-            "qui est messie osango":"messie osango est mon créateur "
-        };
+// Script unifié et corrigé
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
 
-        async function sendMessage() {
-            const userMessage = document.getElementById("txt").value.trim();
-            if (!userMessage) return;
+const API_KEY = "AIzaSyBN4UIH-n3ZKDqXggccAatrcpi_fBf6XiA";
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
-            const chatBox = document.getElementById("list_cont");
-            
-            // Ajout message utilisateur
-            const userElement = document.createElement("li");
-            userElement.classList.add("schat");
-            userElement.textContent = userMessage;
-            chatBox.appendChild(userElement);
+const predefinedResponses = {
+    "qui es-tu ?": "Je suis l'intelligence artificielle créée par Messie Osango.",
+    "créateur": "Mon créateur est Messie Osango.",
+    "qui t'a créé": "J'ai été développée par Messie Osango, un passionné d'intelligence artificielle.",
+    "que fais-tu": "Je suis ici pour répondre à vos questions et vous aider dans vos tâches quotidiennes !",
+    "qui est messie osango": "Messie Osango est mon créateur"
+};
 
-            document.getElementById("txt").value = '';
-            
-            // Vérification réponse programmée
-            const cleanMsg = userMessage.toLowerCase();
-            let response = predefinedResponses[cleanMsg];
+async function sendMessage() {
+    const userMessage = document.getElementById("txt").value.trim();
+    if (!userMessage) return;
 
-            if (!response) {
-                try {
-                    response = await fetchGroqData(userMessage);
-                } catch (error) {
-                    response = "Désolé, une erreur s'est produite. Veuillez réessayer.";
-                }
-            }
+    const chatBox = document.getElementById("list_cont");
+    
+    // Ajout message utilisateur
+    const userElement = document.createElement("li");
+    userElement.classList.add("schat");
+    userElement.textContent = userMessage;
+    chatBox.appendChild(userElement);
 
-            // Ajout réponse
-            const botElement = document.createElement("li");
-            botElement.classList.add("rchat");
-            botElement.textContent = response;
-            chatBox.appendChild(botElement);
+    document.getElementById("txt").value = '';
+    
+    // Vérification réponse programmée
+    const cleanMsg = userMessage.toLowerCase();
+    let response = predefinedResponses[cleanMsg];
 
-            chatBox.scrollTop = chatBox.scrollHeight;
+    if (!response) {
+        try {
+            response = await fetchGeminiData(userMessage);
+        } catch (error) {
+            response = "Désolé, une erreur s'est produite. Veuillez réessayer.";
         }
+    }
 
-        async function fetchGroqData(prompt) {
-            const apiKey = "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";
-            const url = "https://api.groq.com/openai/v1/chat/completions";
+    // Ajout réponse
+    const botElement = document.createElement("li");
+    botElement.classList.add("rchat");
+    botElement.textContent = response;
+    chatBox.appendChild(botElement);
 
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: "llama3-8b-8192",
-                    messages: [{ role: "user", content: prompt }]
-                })
-            });
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
 
-            if (!response.ok) throw new Error('API error');
-            const data = await response.json();
-            return data.choices[0].message.content;
-              }
+async function fetchGeminiData(prompt) {
+    const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            contents: [{
+                parts: [{
+                    text: prompt
+                }]
+            }]
+        })
+    });
+
+    if (!response.ok) throw new Error('API error');
+    const data = await response.json();
+    
+    if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
+        throw new Error('Réponse API invalide');
+    }
+    
+    return data.candidates[0].content.parts[0].text;
+    }
