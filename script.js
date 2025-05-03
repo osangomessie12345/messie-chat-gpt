@@ -1,4 +1,4 @@
-// Script unifié et corrigé
+
 document.getElementById("sendBtn").addEventListener("click", sendMessage);
 
 const API_KEY = "AIzaSyBN4UIH-n3ZKDqXggccAatrcpi_fBf6XiA";
@@ -18,7 +18,7 @@ async function sendMessage() {
 
     const chatBox = document.getElementById("list_cont");
     
-    // Ajout message utilisateur
+    
     const userElement = document.createElement("li");
     userElement.classList.add("schat");
     userElement.textContent = userMessage;
@@ -26,7 +26,7 @@ async function sendMessage() {
 
     document.getElementById("txt").value = '';
     
-    // Vérification réponse programmée
+    
     const cleanMsg = userMessage.toLowerCase();
     let response = predefinedResponses[cleanMsg];
 
@@ -38,7 +38,6 @@ async function sendMessage() {
         }
     }
 
-    // Ajout réponse
     const botElement = document.createElement("li");
     botElement.classList.add("rchat");
     botElement.textContent = response;
